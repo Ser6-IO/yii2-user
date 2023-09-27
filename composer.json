@@ -1,0 +1,21 @@
+{
+    "name": "ser6-io/yii2-user",
+    "description": "User admin module",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Serg6-IO",
+            "email": "100387766+Ser6-IO@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ser6io\\yii2user\\": ""
+        }
+    }
+}

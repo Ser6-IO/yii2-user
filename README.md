@@ -1,6 +1,5 @@
-Yii2 User
+Yii2 User module
 =========
-User admin module
 
 Installation
 ------------
@@ -22,10 +21,3 @@ or add
 to the require section of your `composer.json` file.
 
 
-Usage
------
-
-Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \ser6io\yii2user\AutoloadExample::widget(); ?>```

@@ -102,10 +102,15 @@ class LoginForm extends Model
                     ->setSubject('Your login for ' . APP_NAME)
                     //->setTextBody($this->body)
                     ->send();
+            } else {
+                Yii::error("Failed to save user verification Token for $this->username " . json_encode($user->errors), 'activity\user\sendLoginLink');
+                return false;
             }
+            
+        } else {
+            Yii::error("Failed login attempt by $this->username", 'activity\user\login-link');
             return false;
         }
-        return false;
     }
 
     /**

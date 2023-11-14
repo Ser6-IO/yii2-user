@@ -56,26 +56,6 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
-        return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            
-            [['email', 'status'], 'required'],
-            ['email', 'trim'],
-            ['email', 'email'],
-            ['email', 'unique'],
-
-            ['password_input', 'required', 'on' => self::SCENARIO_CREATE],
-            ['password_input', 'string', 'min' => 6, 'on' => self::SCENARIO_CREATE],
-            ['password_input', 'safe', 'on' => self::SCENARIO_UPDATE],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

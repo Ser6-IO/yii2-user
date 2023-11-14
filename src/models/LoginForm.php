@@ -14,12 +14,14 @@ use yii\base\Model;
 class LoginForm extends Model
 {
     public $username;
+    public $email;
     public $password;
     public $token;
     public $rememberMe = true;
 
     private $_user = false;
 
+    const PASSWORD_LOGIN = 'passwordLogin';
     const LINK_LOGIN = 'linkLogin';
     const LINK_LOGIN_CALLBACK = 'linkLoginCallback';
 
@@ -29,7 +31,8 @@ class LoginForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::LINK_LOGIN] = ['username'];
+        $scenarios[self::PASSWORD_LOGIN] = ['username', 'password', 'rememberMe'];
+        $scenarios[self::LINK_LOGIN] = ['email'];
         $scenarios[self::LINK_LOGIN_CALLBACK] = ['token'];
         return $scenarios;
     }
@@ -40,10 +43,13 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
-            ['username', 'email'],
-            ['username', 'trim'],
-            ['username', 'filter', 'filter' => 'strtolower'],
+            [['username', 'email', 'password'], 'required'],
+            
+            [['username', 'email'], 'trim'],
+            ['username', 'string', 'max' => 255],
+            ['email', 'filter', 'filter' => 'strtolower'],
+            ['email', 'email'],
+
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
             ['token', 'validateToken'],
@@ -90,25 +96,25 @@ class LoginForm extends Model
      */
     public function sendLoginLink()
     {
-        if ($user = User::findByUsername($this->username)) {
+        if ($user = User::findByUsername($this->email)) {
         
             $user->generateEmailVerificationToken();
             
             if ($user->save()) {
                 return Yii::$app->mailer->compose('@ser6io/yii2user/mail/login-link-html', ['user' => $user, 'token' => $user->verification_token])
-                    ->setTo($this->username)
+                    ->setTo($this->email)
                     ->setFrom([APP_SENDER_EMAIL => APP_SENDER_NAME])
                     //->setReplyTo([$this->email => $this->name])
                     ->setSubject('Your login for ' . APP_NAME)
                     //->setTextBody($this->body)
                     ->send();
             } else {
-                Yii::error("Failed to save user verification Token for $this->username " . json_encode($user->errors), 'activity\user\sendLoginLink');
+                Yii::error("Failed to save user verification Token for $this->email " . json_encode($user->errors), 'activity\user\sendLoginLink');
                 return false;
             }
             
         } else {
-            Yii::error("Failed login attempt by $this->username", 'activity\user\login-link');
+            Yii::error("Failed login attempt by $this->email", 'activity\user\login-link');
             return false;
         }
     }
@@ -162,13 +168,4 @@ class LoginForm extends Model
         return $this->_user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'username' => 'Email',
-        ];
-    }
 }

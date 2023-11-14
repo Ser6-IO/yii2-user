@@ -55,7 +55,7 @@ class AuthController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new LoginForm(['scenario' => LoginForm::PASSWORD_LOGIN]);
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('info', "Logged in as $model->username.");
             return $this->goBack();
@@ -110,9 +110,6 @@ class AuthController extends Controller
         }
 
         $model = new LoginForm(['scenario' => LoginForm::LINK_LOGIN_CALLBACK]);
-
-        //$model->token = $token;
-
         if ($model->load(Yii::$app->request->get(), '') && $model->loginByToken()) {
             Yii::$app->session->setFlash('info', "Logged in as $model->username.");
             return $this->goBack();

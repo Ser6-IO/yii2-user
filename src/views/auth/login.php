@@ -20,7 +20,7 @@ $this->title = Yii::$app->name . ' - Login';
             </div>
             <div class="modal-body">
 
-                <p>Please login with your email address:</p>
+                <p>Please login:</p>
 
                 <?php $form = ActiveForm::begin([
                     'id' => 'login-form',
@@ -28,11 +28,17 @@ $this->title = Yii::$app->name . ' - Login';
                     'options' => ['name' => 'login-form']
                 ]); ?>
 
-                <?= $form->field($model, 'username', ['inputOptions' => ['autocomplete' => 'email']])->textInput(['autofocus' => true]) ?>
+                <?php if ($model->scenario == LoginForm::LINK_LOGIN): ?>
 
-                <?php if ($model->scenario != LoginForm::LINK_LOGIN): ?>
+                    <?= $form->field($model, 'email', ['inputOptions' => ['autocomplete' => 'email']])->textInput(['autofocus' => true]) ?>
 
-                    <?php $buttonCaption = 'Login'; ?>
+                    <p class="mt-2 text-muted card-text"><small>We'll email you a link to log in, or you can <a href="/user/auth/login">log in with a password</a> instead.</small></p>
+
+                    <?php $buttonCaption = 'Continue'; ?>
+
+                <?php elseif ($model->scenario == LoginForm::PASSWORD_LOGIN): ?>
+
+                    <?= $form->field($model, 'username', ['inputOptions' => ['autocomplete' => 'email']])->textInput(['autofocus' => true])->label('Username or Email') ?>
 
                     <?= $form->field($model, 'password', ['inputOptions' => ['autocomplete' => 'current-password'], 'errorOptions' => ['encode' => false]])->passwordInput() ?>
 
@@ -40,12 +46,8 @@ $this->title = Yii::$app->name . ' - Login';
 
                     <p class="mt-2 text-muted card-text"><small>Forgot your password? <a href="/user/auth/link-login">Log in with a link</a> instead.</small></p>
 
-                <?php else: ?>
-                    
-                    <?php $buttonCaption = 'Continue'; ?>
+                    <?php $buttonCaption = 'Login'; ?>
 
-                    <p class="mt-2 text-muted card-text"><small>We'll email you a link to log in, or you can <a href="/user/auth/login">log in with a password</a> instead.</small></p>
-                
                 <?php endif; ?>
 
                 <?php ActiveForm::end(); ?>

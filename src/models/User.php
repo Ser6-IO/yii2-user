@@ -16,6 +16,7 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
+ * @property string $access_token
  * @property string $email
  * @property string $auth_key
  * @property integer $status
@@ -214,4 +215,25 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+
+    /** NOT tested/used - for Rate limitting */
+    /* https://www.yiiframework.com/doc/guide/2.0/en/rest-rate-limiting */
+    //To improve performance, you may also consider storing allowance and allowance_updated_at in a cache or NoSQL storage.
+    public function getRateLimit($request, $action)
+    {
+        return [$this->rate_limit, 1]; // $rateLimit requests per second
+        //example: return [1,20]; // There can be 1 api call every 20 seconds
+    }
+
+    public function loadAllowance($request, $action)
+    {
+        return [$this->allowance, $this->allowance_updated_at];
+    }
+
+    public function saveAllowance($request, $action, $allowance, $timestamp)
+    {
+        $this->allowance = $allowance;
+        $this->allowance_updated_at = $timestamp;
+        $this->save();
+    }
 }

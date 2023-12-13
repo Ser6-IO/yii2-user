@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     public $defaultAction = 'login';
 
-    public $layout = 'blank';
+    public $layout = 'login';
 
     /**
      * {@inheritdoc}
@@ -90,7 +90,7 @@ class AuthController extends Controller
             return  $this->render('login-message', [
                 'title' => 'Check your inbox!',
                 'body' => 'Click the confirmation link sent to your email address to log in.',
-                'footer' => "Didn\'t receive an email? <a href='/user/auth/link-login'>Resend it</a> or <a mailto='" . APP_SUPPORT_EMAIL . "'>contact us</a>."
+                'footer' => "Didn\'t receive an email? <a href='/user/auth/link-login'>Resend it</a> or <a href='mailto:" . APP_SUPPORT_EMAIL . "'>contact us</a>."
             ]);
 
         }

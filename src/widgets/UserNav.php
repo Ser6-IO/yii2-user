@@ -30,7 +30,7 @@ class UserNav extends \yii\bootstrap5\Nav
                 'items' => [
                     '<div class="dropdown-header">User</div>',
                     ['label' => '<i class="bi bi-person-gear"></i> Profile', 'url' => ['/user/profile/view']],
-                    ['label' => '<i class="bi bi-person-lock"></i> Password', 'url' => ['/user/profile/password']],
+                    ['label' => '<i class="bi bi-person-lock"></i> Password', 'url' => ['/user/auth/request-password-reset']],
                     '-',
                     ['label' => '<i class="bi bi-power"></i> Logout', 'url' => '/user/auth/logout', 'linkOptions' => ['data-tooltip' => 'true', 'title' => 'Logout', 'data-method' => 'post']]
                 ]

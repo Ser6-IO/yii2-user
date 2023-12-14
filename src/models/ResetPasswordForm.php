@@ -11,6 +11,7 @@ use yii\base\Model;
 class ResetPasswordForm extends Model
 {
     public $password;
+    public $password_repeat;
 
     /**
      * @var app\models\User
@@ -48,9 +49,23 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['password', 'password_repeat'], 'required'],
+            [['password', 'password_repeat'], 'string', 'min' => 6],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'message'=>'The new password does not match.'],
+      
+
             //['password', \saavtek\LoginWD\Unlock::className(), 'username' => $this->_user->username],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password'=>'New password',
+            'password_repeat'=>'Confirm new password',
         ];
     }
 

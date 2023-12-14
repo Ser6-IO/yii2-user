@@ -26,6 +26,8 @@ $this->title = 'Reset password';
             
     <?= $form->field($model, 'password', ['inputOptions' => ['autocomplete' => 'new-password']])->passwordInput(['autofocus' => true]) ?>
     
+    <?= $form->field($model, 'password_repeat', ['inputOptions' => ['autocomplete' => 'new-password']])->passwordInput() ?>
+
 </div>
 
 <div class="modal-footer me-auto">

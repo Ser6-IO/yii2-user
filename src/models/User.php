@@ -200,6 +200,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Removes password reset token
+     */
+    public function removePasswordResetToken()
+    {
+        $this->password_reset_token = null;
+    }
+
+    /**
      * Generates new token for email verification
      */
     public function generateEmailVerificationToken()
@@ -208,13 +216,12 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Removes password reset token
+     * Removes email verification reset token
      */
-    public function removePasswordResetToken()
+    public function removeEmailVerificationToken()
     {
-        $this->password_reset_token = null;
+        $this->verification_token = null;
     }
-
 
     /** NOT tested/used - for Rate limitting */
     /* https://www.yiiframework.com/doc/guide/2.0/en/rest-rate-limiting */

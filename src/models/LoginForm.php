@@ -139,7 +139,14 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $this->username = $this->_user->username;
-            return Yii::$app->user->login($this->getUserByToken(), 3600*24*30);
+
+            $login = Yii::$app->user->login($this->getUserByToken(), 3600*24*30);
+
+            if ($login) {
+                $this->_user->removeEmailVerificationToken();
+                $this->_user->save();
+                return true;
+            }            
         }
         return false;
     }

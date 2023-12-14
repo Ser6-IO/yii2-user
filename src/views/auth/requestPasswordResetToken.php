@@ -9,13 +9,15 @@ $this->title = 'Request password reset';
 
 <div class="modal-header">
 
-    <h1 class="modal-title fs-4" id="loginModalLabel"><?= $this->title ?></h1>
+    <h1 class="modal-title fs-4" id="loginModalLabel"><?= APP_NAME ?></h1>
 
 </div>
 
 <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
 
 <div class="modal-body">
+
+    <h5 class="modal-title"><?= $this->title ?></h5>
     
     <p>Please enter your email address and we'll send you a link to create a new password.</p>
     

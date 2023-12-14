@@ -12,13 +12,15 @@ $this->title = 'Reset password';
 
 <div class="modal-header">
 
-    <h1 class="modal-title fs-4" id="loginModalLabel"><?= $this->title ?></h1>
+    <h1 class="modal-title fs-4" id="loginModalLabel"><?= APP_NAME ?></h1>
 
 </div>
 
 <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
 <div class="modal-body">
+
+    <h5 class="modal-title"><?= $this->title ?></h5>
     
     <p class="">Please choose your new password:</p>
             

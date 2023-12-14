@@ -6,6 +6,8 @@
     <a href="<?= Yii::$app->urlManager->createAbsoluteUrl(['/user/auth/login-callback', 'token' => $token]) ?>">Login</a>
 </p>
 
+<?php //<p><?= Yii::$app->urlManager->createAbsoluteUrl(['/user/auth/login-callback', 'token' => $token])</p> ?>
+
 <br>
 
 <p>If you did not request this, you can ignore this email.</p>

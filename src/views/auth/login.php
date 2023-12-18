@@ -34,6 +34,10 @@ $this->title = Yii::$app->name . ' - Login';
 
         <?php $buttonCaption = 'Continue'; ?>
 
+        <script>
+            window.onload = () => { initLoginModal('loginform-email') }
+        </script>
+
     <?php elseif ($model->scenario == LoginForm::PASSWORD_LOGIN): ?>
 
         <?= $form->field($model, 'username', ['inputOptions' => ['autocomplete' => 'email']])->textInput(['autofocus' => true])->label('Username or Email') ?>
@@ -45,6 +49,10 @@ $this->title = Yii::$app->name . ' - Login';
         <p class="mt-2 text-muted card-text"><small>Forgot your password? <a href="/user/auth/link-login">Log in with a link</a> instead.</small></p>
 
         <?php $buttonCaption = 'Login'; ?>
+
+        <script>
+            window.onload = () => { initLoginModal('loginform-username') }
+        </script>
 
     <?php endif; ?>
 
@@ -61,9 +69,6 @@ $this->title = Yii::$app->name . ' - Login';
     <p class="text-muted"><small>By logging in, you agree to our Terms and Conditions and Privacy Policy.</small></p>
 </div>
 
-<script>
-    window.onload = () => { initLoginModal('loginform-username') }
-</script>
 
 
 

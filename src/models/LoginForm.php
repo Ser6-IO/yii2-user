@@ -96,6 +96,16 @@ class LoginForm extends Model
      */
     public function sendLoginLink()
     {
+        //Move to module/component
+        if (Yii::$app->controller->module->id != APP_ID) {
+            $module = APP_ID . '\\' . Yii::$app->controller->module->id;
+        } else {
+            $module = Yii::$app->controller->module->id;
+        }
+        $logCategory = "$module\\" . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id;
+
+
+
         if ($user = User::findByUsername($this->email)) {
         
             $user->generateEmailVerificationToken();
@@ -109,12 +119,13 @@ class LoginForm extends Model
                     //->setTextBody($this->body)
                     ->send();
             } else {
-                Yii::error("Failed to save user verification Token for $this->email " . json_encode($user->errors), 'activity\user\sendLoginLink');
+
+                Yii::error("Failed to save user verification Token for $this->email " . json_encode($user->errors), $logCategory);
                 return false;
             }
             
         } else {
-            Yii::error("Failed login attempt by $this->email", 'activity\user\login-link');
+            Yii::error("Failed login attempt by $this->email", $logCategory);
             return false;
         }
     }

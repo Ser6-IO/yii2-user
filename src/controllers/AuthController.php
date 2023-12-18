@@ -84,7 +84,7 @@ class AuthController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             if (!$model->sendLoginLink()) {
-                Yii::error($model->username, 'activity\sendLoginLink');
+                Yii::error($model->username, APP_ID . '\sendLoginLink');
             }
 
             return  $this->render('login-message', [
@@ -117,7 +117,14 @@ class AuthController extends Controller
             return $this->goBack();
         }
 
-        Yii::error($model->token, 'activity\\' . Yii::$app->controller->module->id . '\\' . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id);
+
+        if (Yii::$app->controller->module->id != APP_ID) {
+            $module = APP_ID . '\\' . Yii::$app->controller->module->id;
+        } else {
+            $module = Yii::$app->controller->module->id;
+        }
+
+        Yii::error($model->token, "$module\\" . '\\' . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id);
         return  $this->render('login-message',[
             'title' => APP_NAME . ' - Login failed',
             'body' => '<i class="bi bi-exclamation-triangle"></i> Sorry, we are unable to  log you in with this link.',

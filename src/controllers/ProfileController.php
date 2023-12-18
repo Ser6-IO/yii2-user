@@ -19,7 +19,7 @@ class ProfileController extends Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['view', 'password'],
+                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -36,14 +36,4 @@ class ProfileController extends Controller
     {
         return $this->render('view');
     }
-
-    /**
-     * Renders the User profile password change form
-     * @return string
-     */
-    public function actionPassword()
-    {
-        return $this->render('password');
-    }
-
 }

@@ -2,8 +2,6 @@
 
 namespace ser6io\yii2user;
 
-use Yii;
-
 /**
  * User module definition class
  */
@@ -22,7 +20,5 @@ class User extends \yii\base\Module
         parent::init();
 
         $this->defaultRoute = 'profile';
-
-        $this->layoutPath = '@app/views/layouts';
     }
 }

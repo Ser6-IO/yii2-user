@@ -112,7 +112,7 @@ class LoginForm extends Model
             
             if ($user->save()) {
                 return Yii::$app->mailer->compose('@ser6io/yii2user/mail/login-link-html', ['user' => $user, 'token' => $user->verification_token])
-                    ->setTo($this->email)
+                    ->setTo($user->email)
                     ->setFrom([APP_SENDER_EMAIL => APP_SENDER_NAME])
                     //->setReplyTo([$this->email => $this->name])
                     ->setSubject('Your login for ' . APP_NAME)
@@ -120,7 +120,7 @@ class LoginForm extends Model
                     ->send();
             } else {
 
-                Yii::error("Failed to save user verification Token for $this->email " . json_encode($user->errors), $logCategory);
+                Yii::error("Failed to save user verification Token for $user->email " . json_encode($user->errors), $logCategory);
                 return false;
             }
             

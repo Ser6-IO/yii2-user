@@ -106,7 +106,7 @@ class LoginForm extends Model
 
 
 
-        if ($user = User::findByUsername($this->email)) {
+        if ($user = User::findByUsername($this->username)) {
         
             $user->generateEmailVerificationToken();
             
@@ -125,7 +125,7 @@ class LoginForm extends Model
             }
             
         } else {
-            Yii::error("Failed login attempt by $this->email", $logCategory);
+            Yii::error("Failed login attempt by $this->username", $logCategory);
             return false;
         }
     }

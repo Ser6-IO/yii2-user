@@ -104,9 +104,9 @@ class LoginForm extends Model
         }
         $logCategory = "$module\\" . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id;
 
+        $user = User::findByEmail($this->email);
 
-
-        if ($user = User::findByUsername($this->username)) {
+        if ($user !== null) {
         
             $user->generateEmailVerificationToken();
             

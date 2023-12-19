@@ -84,7 +84,7 @@ class AuthController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             if (!$model->sendLoginLink()) {
-                Yii::error($model->username, APP_ID . '\sendLoginLink');
+                Yii::error($model->email, APP_ID . '\sendLoginLink');
             }
 
             return  $this->render('login-message', [

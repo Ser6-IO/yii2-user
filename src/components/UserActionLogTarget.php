@@ -53,7 +53,7 @@ class UserActionLogTarget extends \yii\log\DbTarget
                     ':category' => $category,
                     ':log_time' => $timestamp,
                     ':ip' => Yii::$app->request->userIP ?? null,
-                    ':user_id' => Yii::$app->user->id ?? null,
+                    ':user_id' => Yii::$app->user->id ?? (Yii::$app instanceof \yii\console\Application ? -1 : null),
                     ':session_id' => Yii::$app->session->id ?? null,
                     ':message' => $text,
                 ])->execute() > 0) {

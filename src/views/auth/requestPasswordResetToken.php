@@ -1,15 +1,14 @@
 <?php
-
 use yii\bootstrap5\Html;
 use ser6io\yii2bs5widgets\ActiveForm;
 
 $this->title = 'Request password reset';
-
 ?>
 
 <div class="modal-header">
 
     <h1 class="modal-title fs-4" id="loginModalLabel"><?= APP_NAME ?></h1>
+    <?php if ($closeBtn) echo Html::a('', $closeBtn, ['class' => 'btn-close']) ?>
 
 </div>
 

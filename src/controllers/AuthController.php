@@ -124,8 +124,10 @@ class AuthController extends Controller
         } else {
             $module = Yii::$app->controller->module->id;
         }
+        Yii::error(["loginByToken" => $model->token, $model->errors], "$module\\" . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id);
 
-        Yii::error($model->token, "$module\\" . '\\' . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id);
+
+        
         return  $this->render('login-message',[
             'title' => APP_NAME . ' - Login failed',
             'body' => '<i class="bi bi-exclamation-triangle"></i> Sorry, we are unable to  log you in with this link.',

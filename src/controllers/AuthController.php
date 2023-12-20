@@ -85,8 +85,10 @@ class AuthController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
             if (!$model->sendLoginLink()) {
-                Yii::error($model->email, APP_ID . '\sendLoginLink');
+                \ser6io\yii2user\components\UserActionLog::error(["sendLoginLink" => $model->email ?? 'No email provided', $model->errors]);
             }
+
+        //IF email not found? suggest register? contact us? other???????????????
 
             return  $this->render('login-message', [
                 'title' => 'Check your inbox!',
@@ -118,16 +120,8 @@ class AuthController extends Controller
             return $this->goBack();
         }
 
+        \ser6io\yii2user\components\UserActionLog::error(["loginByToken" => $model->token, $model->errors]);
 
-        if (Yii::$app->controller->module->id != APP_ID) {
-            $module = APP_ID . '\\' . Yii::$app->controller->module->id;
-        } else {
-            $module = Yii::$app->controller->module->id;
-        }
-        Yii::error(["loginByToken" => $model->token, $model->errors], "$module\\" . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id);
-
-
-        
         return  $this->render('login-message',[
             'title' => APP_NAME . ' - Login failed',
             'body' => '<i class="bi bi-exclamation-triangle"></i> Sorry, we are unable to  log you in with this link.',
@@ -157,10 +151,16 @@ class AuthController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
+                
                 Yii::$app->session->setFlash('success', "We've sent you an email with a password reset link - this link will expire in one (1) hour. Please check your inbox for further instructions.");
+                
+                \ser6io\yii2user\components\UserActionLog::info($model->email);
+                
                 return $this->goHome();
             } else {
                 Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+
+                \ser6io\yii2user\components\UserActionLog::error($model->email ?? 'No email provided');
             }
         }
 

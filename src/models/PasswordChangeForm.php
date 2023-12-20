@@ -83,7 +83,7 @@ class PasswordChangeForm extends Model
         if ($user->status == User::STATUS_INACTIVE) {
             $user->status = User::STATUS_ACTIVE;
         }
-        Yii::info("Password changed: " . $user->username, __METHOD__);
+        \ser6io\yii2user\components\UserActionLog::trace("Password changed for " . $user->username);
         return $user->save(false);
     }
 }

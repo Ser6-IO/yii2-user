@@ -82,7 +82,7 @@ class PasswordResetForm extends Model
         if ($user->status == User::STATUS_INACTIVE) {
             $user->status = User::STATUS_ACTIVE;
         }
-        Yii::info("Password reset: " . $user->username, __METHOD__);
+        \ser6io\yii2user\components\UserActionLog::trace("Password reset for " . $user->username);
         return $user->save(false);
     }
 }

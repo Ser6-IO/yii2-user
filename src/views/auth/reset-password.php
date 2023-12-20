@@ -12,7 +12,7 @@ $this->title = 'Reset password';
 
 <div class="modal-header">
     <h1 class="modal-title fs-4" id="loginModalLabel"><?= APP_NAME ?></h1>
-    <?php if ($closeBtn) echo Html::a('', $closeBtn, ['class' => 'btn-close']) ?>
+    <?php if (isset($closeBtn)) echo Html::a('', $closeBtn, ['class' => 'btn-close']) ?>
 </div>
 
 <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>

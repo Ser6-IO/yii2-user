@@ -26,8 +26,6 @@ $this->title = Yii::$app->name . ' - Login';
         'options' => ['name' => 'login-form']
     ]); ?>
 
-    <?= $form->errorSummary($model) ?>
-
     <?php if ($model->scenario == LoginForm::LINK_LOGIN): ?>
 
         <?= $form->field($model, 'email', ['inputOptions' => ['autocomplete' => 'email']])->textInput(['autofocus' => true]) ?>

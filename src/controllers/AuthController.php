@@ -9,8 +9,8 @@ use yii\web\Controller;
 use yii\web\Response;
 use ser6io\yii2user\models\LoginForm;
 use ser6io\yii2user\models\PasswordResetRequestForm;
-use ser6io\yii2user\models\ResetPasswordForm;
-use ser6io\yii2user\models\PasswordForm;
+use ser6io\yii2user\models\PasswordResetForm;
+use ser6io\yii2user\models\PasswordChangeForm;
 
 /**
  * Default controller for the `user` module
@@ -162,7 +162,7 @@ class AuthController extends Controller
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('request-password-reset-token', [
             'model' => $model,
             'closeBtn' => ['/'],
         ]);
@@ -178,7 +178,7 @@ class AuthController extends Controller
     public function actionResetPassword($token=null)
     {   
         try {
-            $model = new ResetPasswordForm($token);
+            $model = new PasswordResetForm($token);
         } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
@@ -188,7 +188,7 @@ class AuthController extends Controller
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
+        return $this->render('reset-password', [
             'model' => $model,
             'closeBtn' => ['/'],
         ]);
@@ -203,14 +203,14 @@ class AuthController extends Controller
      */
     public function actionChangePassword()
     {   
-        $model = new PasswordForm();
+        $model = new PasswordChangeForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password saved.');
             return $this->goHome();
         }
 
-        return $this->render('password', [
+        return $this->render('change-password', [
             'model' => $model,
             'closeBtn' => ['/'],
         ]);

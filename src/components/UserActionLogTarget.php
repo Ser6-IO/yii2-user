@@ -27,6 +27,16 @@ class UserActionLogTarget extends \yii\log\DbTarget
         if (Yii::$app === null) {
             throw new LogRuntimeException('Unable to export User log - NO APP');
         }
+        
+        if (Yii::$app instanceof \yii\console\Application) {
+            $user_id = -1;
+        } else {
+            $user_id = Yii::$app->user->id ?? null;
+        }
+
+        $session_id = Yii::$app->session->id ?? null;
+
+        $ip = Yii::$app->request->userIP ?? null;
 
         if ($this->db->getTransaction()) {
             // create new database connection, if there is an open transaction
@@ -35,9 +45,12 @@ class UserActionLogTarget extends \yii\log\DbTarget
         }
 
         $tableName = $this->db->quoteTableName($this->logTable);
+
         $sql = "INSERT INTO $tableName ([[level]], [[category]], [[log_time]], [[ip]], [[user_id]], [[session_id]], [[message]])
                 VALUES (:level, :category, :log_time, :ip, :user_id, :session_id, :message)";
+        
         $command = $this->db->createCommand($sql);
+        
         foreach ($this->messages as $message) {
             list($text, $level, $category, $timestamp) = $message;
             if (!is_string($text)) {
@@ -52,9 +65,9 @@ class UserActionLogTarget extends \yii\log\DbTarget
                     ':level' => $level,
                     ':category' => $category,
                     ':log_time' => $timestamp,
-                    ':ip' => Yii::$app->request->userIP ?? null,
-                    ':user_id' => Yii::$app->user->id ?? (Yii::$app instanceof \yii\console\Application ? -1 : null),
-                    ':session_id' => Yii::$app->session->id ?? null,
+                    ':ip' => $ip,
+                    ':user_id' => $user_id,
+                    ':session_id' => $session_id,
                     ':message' => $text,
                 ])->execute() > 0) {
                 continue;

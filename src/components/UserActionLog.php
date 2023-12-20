@@ -12,10 +12,6 @@ class UserActionLog
 {
     public static function getCategory()
     {
-        //Check if console app???
-        //if ($app instanceof \yii\console\Application) 
-
-
         if (Yii::$app->controller->module->id != APP_ID) {
             $module = APP_ID . '\\' . Yii::$app->controller->module->id;
         } else {

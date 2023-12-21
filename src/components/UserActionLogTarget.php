@@ -27,12 +27,12 @@ class UserActionLogTarget extends \yii\log\DbTarget
         if (Yii::$app === null) {
             throw new LogRuntimeException('Unable to export User log - NO APP');
         }
-        
-        if (Yii::$app instanceof \yii\console\Application) {
-            $user_id = -1;
-        } else {
+
+        if (Yii::$app instanceof \yii\web\Application) {
             $user_id = Yii::$app->user->id ?? null;
-        }
+        } else { //Yii::$app IS \yii\console\Application
+            $user_id = Yii::$app->params['userId'] ?? -1;
+        } 
 
         $session_id = Yii::$app->session->id ?? null;
 

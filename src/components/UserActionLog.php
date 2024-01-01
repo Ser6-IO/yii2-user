@@ -12,12 +12,13 @@ class UserActionLog
 {
     public static function getCategory()
     {
-        if (Yii::$app->controller->module->id != APP_ID) {
-            $module = APP_ID . '\\' . Yii::$app->controller->module->id;
-        } else {
-            $module = Yii::$app->controller->module->id;
+        $controllerId = Yii::$app->controller->id ?? '';
+        $actionId = Yii::$app->controller->action->id ?? '';
+        $moduleId = Yii::$app->controller->module->id ?? APP_ID;
+        if ($moduleId != APP_ID) {
+            $moduleId = APP_ID . "\\$moduleId";
         }
-        return "$module\\" . Yii::$app->controller->id . '\\' . Yii::$app->controller->action->id;
+        return "$moduleId\\$controllerId\\$actionId";
     }
    
     public static function error($message = null, $category = null)

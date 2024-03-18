@@ -1,0 +1,18 @@
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+
+# composer auth.json
+auth.json
+auth_copy.json
+
+# Mac DS_Store Files
+**/.DS_Store
+
+node_modules
+
+composer_dev.lock
+
+.env.php

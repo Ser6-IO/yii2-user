@@ -15,7 +15,7 @@ class UserNav extends \yii\bootstrap5\Nav
     /**
      * {@inheritDoc}
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
